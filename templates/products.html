@@ -1,0 +1,148 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}Products{% endblock page_title %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>Products</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>Products</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+
+   {% if products|length <= 0 %}
+      <h1 class="centred">No Products In the Database...</h1>
+   {% else %}
+      <section class="shop-page-section">
+         <div class="auto-container">
+            <div class="item-shorting clearfix">
+               <div class="left-column pull-left clearfix">
+               <div class="filter-box">
+                  <div class="dropdown">
+                     <button
+                     class="search-box-btn"
+                     type="button"
+                     id="dropdownMenu5"
+                     data-toggle="dropdown"
+                     aria-haspopup="true"
+                     aria-expanded="false"
+                     >
+                     <i class="flaticon-list-2"></i>Filter
+                     </button>
+                     <div class="filter-content dropdown-menu pull-right search-panel" aria-labelledby="dropdownMenu5">
+                        <div class="close-btn"><i class="flaticon-close"></i></div>
+                        <div class="discription-box">
+                           <div class="row clearfix">
+                              <div class=" col-sm-12 column">
+                                 <div class="single-column">
+                                    <h4>Category</h4>
+                                    <ul class="list clearfix">
+                                       {% for category in categories %}
+                                          <li>
+                                             <a href="{% url 'category_details' category.slug %}">{{category.title}}</a>
+                                          </li>
+                                       {% endfor %}
+                                    </ul>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div style="width: 100%" class="price-filters">
+                           <h4 class="sidebar-title">Price Range</h4>
+                           <div class="range-slider clearfix">
+                              <div class="price-range-slider"></div>
+                              <div class="clearfix">
+                              <p>Range: ${{min_price}} - ${{max_price}}</p>
+                              <div class="title"></div>
+                              <div class="input">
+                                 <input min="{{min_price}}" max="{{max_price}}" type="range" class="property-amount" name="field-name" />
+                              </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="text"><p>Showing 1–12 of {{products.count}} Results</p></div>
+               </div>
+               <div class="right-column pull-right clearfix">
+               <div class="short-box clearfix">
+                  <p>Short by</p>
+                  <div class="select-box">
+                     <select class="wide">
+                     <option data-display="Popularity">Popularity</option>
+                     <option value="1">New Collection</option>
+                     <option value="2">Top Sell</option>
+                     <option value="4">Top Ratted</option>
+                     </select>
+                  </div>
+               </div>
+               </div>
+            </div>
+            <div class="our-shop">
+               <div class="row clearfix">
+                  {% for product in products %}
+                     <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
+                        <div class="shop-block-one">
+                           <div class="inner-box">
+                           <figure class="image-box">
+                              <img
+                                 src="{{ product.image.url }}"
+                                 alt=""
+                              />
+                              <ul class="info-list clearfix">
+                                 <li>
+                                 <a>
+                                    <i class="flaticon-heart"></i>
+                                 </a>
+                                 </li>
+                                 <li>
+                                    <a href="{% url 'add_to_cart' product.id %}">Add to cart</a>
+                                 </li>
+                                 <li>
+                                 <a
+                                    href="{{ product.image.url }}"
+                                    class="lightbox-image"
+                                    data-fancybox="gallery"
+                                    ><i class="flaticon-search"></i
+                                 ></a>
+                                 </li>
+                              </ul>
+                           </figure>
+                           <div class="lower-content">
+                              <a class="line-clamp" href="{% url 'product_details' product.category.slug product.slug %}">{{ product.title }}</a>
+                              <span class="price">${{ product.price }}</span>
+                           </div>
+                           </div>
+                        </div>
+                     </div>
+                  {% endfor %}
+               </div>
+            </div>
+            {% if products|length >= 20 %}
+               <div class="pagination-wrapper centred">
+                  <ul class="pagination clearfix">
+                     <li><a href="{% url 'products' %}" class="active">Prev</a></li>
+                     <li><a href="{% url 'products' %}">1</a></li>
+                     <li><a href="{% url 'products' %}">2</a></li>
+                     <li><a href="{% url 'products' %}">3</a></li>
+                     <li><a href="{% url 'products' %}">4</a></li>
+                     <li><a href="{% url 'products' %}">5</a></li>
+                     <li><a href="{% url 'products' %}">Next</a></li>
+                  </ul>
+               </div>
+            {% endif %}
+         </div>
+      </section>
+   {% endif %}
+{% endblock main_page_content %}

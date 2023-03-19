@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      {% load static %}
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link
+      rel="shortcut icon"
+      href="{% static 'images/favicon.ico' %}"
+      type="image/x-icon"
+      />
+      <link rel="stylesheet" href="{% static 'css/flaticon.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/font-awesome-all.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/magicons.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/color.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+
+      <script src="{% static 'js/main.js' %}" defer></script>
+      <title>Ezone - {% block page_title %}{% endblock page_title %}</title>
+   </head>
+   <body>
+      <div class="boxed_wrapper">
+         <div class="search-popup">
+            <div class="close-search"><i class="flaticon-close"></i></div>
+            <div class="popup-inner">
+               <div class="overlay-layer"></div>
+               <div class="search-form">
+                  <form method="get" action="/search/">
+                     <div class="form-group">
+                        <fieldset>
+                           <input type="search" class="form-control" name="q" value="" placeholder="Search Here" required >
+                           <input type="submit" value="Search Now!" class="theme-btn style-four">
+                        </fieldset>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+
+         <header class="main-header">
+            <div class="header-lower">
+               <div class="auto-container">
+                  <div class="outer-box">
+                  <figure class="logo-box">
+                     <a href="{% url 'home' %}"
+                        ><img src="{% static 'images/logo.png' %}" alt=""
+                     /></a>
+                  </figure>
+                  <div class="menu-area">
+                     <div class="mobile-nav-toggler">
+                        <i class="icon-bar"></i>
+                        <i class="icon-bar"></i>
+                        <i class="icon-bar"></i>
+                     </div>
+                     <nav class="main-menu navbar-expand-md navbar-light">
+                        <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                           <ul class="navigation clearfix">
+                              <li><a href="{% url 'home' %}">Home</a></li>
+                              <li><a href="{% url 'about' %}">About Us</a></li>
+                              <li><a href="{% url 'products' %}">Products</a></li>
+                              <li><a href="{% url 'services' %}">Services</a></li>
+                              <li><a href="{% url 'contact' %}">Contact</a></li>
+                           </ul>
+                        </div>
+                     </nav>
+                  </div>
+                  <ul class="menu-right-content clearfix">
+                     <li>
+                        <div class="search-btn">
+                        <button type="button" class="search-toggler">
+                           <i class="icon-loupe"></i>
+                        </button>
+                        </div>
+                     </li>
+                     {% if request.user.is_superuser %}
+                        <li>
+                           <a href="{% url 'my_store' %}"><i class="icon-settings-2"></i></a>
+                        </li>
+                     {% endif %}
+                     <li>
+                        {% if request.user.is_authenticated %}
+                           <a href="{% url 'my_account' %}"><i class="icon-user"></i></a>
+                        {% else %}
+                           <a href="{% url 'login' %}"><i class="icon-enter-right"></i></a>
+                        {% endif %}
+                     </li>
+                     <li class="shop-cart">
+                        <a href="{% url 'cart' %}">
+                           <i class="icon-cart"></i>{% if cart|length > 0 %}<span>{{cart|length}}</span>{% endif %}
+                        </a>
+                     </li>
+                  </ul>
+                  </div>
+               </div>
+            </div>
+         </header>
+
+         <div class="mobile-menu">
+            <div class="menu-backdrop"></div>
+            <div class="close-btn"><i class="icon-close"></i></div>
+            <nav class="menu-box">
+               <div class="nav-logo">
+                  <a href="{% url 'home' %}">
+                     <img src="{% static 'images/logo-2.png' %}" alt="logo_img"/>
+                  </a>
+               </div>
+               <div class="menu-outer"></div>
+               <div class="contact-info">
+                  <h4>Contact Info</h4>
+                  <ul>
+                  <li>{{ezone_address.address}}</li>
+                  <li><a href="tel:{{ezone_address.mobile}}">{{ezone_address.mobile}}</a></li>
+                  <li><a href="mailto:{{ezone_address.mail}}">{{ezone_address.mail}}</a></li>
+                  </ul>
+               </div>
+               <div class="social-links">
+                  <ul class="clearfix">
+                  <li>
+                     <a href="{{ezone_address.twitter}}"><span class="fab fa-twitter"></span></a>
+                  </li>
+                  <li>
+                     <a href="{{ezone_address.facebook}}"
+                        ><span class="fab fa-facebook-square"></span
+                     ></a>
+                  </li>
+                  <li>
+                     <a href="{{ezone_address.pinterest}}"
+                        ><span class="fab fa-pinterest-p"></span
+                     ></a>
+                  </li>
+                  <li>
+                     <a href="{{ezone_address.instagram}}"><span class="fab fa-instagram"></span></a>
+                  </li>
+                  <li>
+                     <a href="{{ezone_address.youtube}}"><span class="fab fa-youtube"></span></a>
+                  </li>
+                  </ul>
+               </div>
+            </nav>
+         </div>
+
+         <div class="preloader modal-backdrop">
+            <img
+              src="{% static 'images/icons/preloader.svg' %}"
+              alt="Website Preloader"
+            />
+          </div>
+
+         {% block main_page_content %}
+
+         {% endblock main_page_content %}
+
+         <footer class="main-footer light">
+            <div class="footer-top">
+               <div class="auto-container">
+                  <div class="row clearfix">
+                  <div class="col-lg-6 col-md-12 col-sm-12 big-column">
+                     <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-12 footer-column">
+                        <div class="footer-widget logo-widget">
+                           <figure class="footer-logo">
+                              <a href="{% url 'home' %}"
+                              ><img src="{% static 'images/logo-2.png' %}" alt=""
+                              /></a>
+                           </figure>
+                        </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 footer-column">
+                        <div class="footer-widget links-widget">
+                           <div class="widget-title">
+                              <h3>Categories</h3>
+                           </div>
+                           <div class="widget-content">
+                              <ul class="links-list clearfix">
+                                 {% for category in categories %}
+                                    <li><a href="{% url 'category_details' category.slug %}">{{category.title}}</a></li>
+                                 {% endfor %}
+                              </ul>
+                           </div>
+                        </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 footer-column">
+                        <div class="footer-widget links-widget">
+                           <div class="widget-title">
+                              <h3>Useful Link</h3>
+                           </div>
+                           <div class="widget-content">
+                              <ul class="links-list clearfix">
+                              <li><a href="{% url 'home' %}">News & Tips</a></li>
+                              <li><a href="{% url 'about' %}">About Us</a></li>
+                              <li><a href="{% url 'home' %}">Terms & Conditions</a></li>
+                              <li><a href="{% url 'products' %}">Our Products</a></li>
+                              <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                              </ul>
+                           </div>
+                        </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6 col-md-12 col-sm-12 big-column">
+                     <div class="row clearfix">
+                        <div class="col-lg-6 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget contact-widget">
+                           <div class="widget-title">
+                              <h3>Contact</h3>
+                           </div>
+                           <ul class="info-list clearfix">
+                              <li>{{ezone_address.address}}</li>
+                              <li><a href="tel:{{ezone_address.mobile}}">{{ezone_address.mobile}}</a></li>
+                              <li>
+                              <a href="mailto:{{ezone_address.mail}}">{{ezone_address.mail}}</a>
+                              </li>
+                           </ul>
+                           <ul class="footer-social clearfix">
+                              <li>
+                                 <a href="{{ezone_address.facebook}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i
+                              ></a>
+                              </li>
+                              <li>
+                                 <a href="{{ezone_address.twitter}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                              </li>
+                              <li>
+                                 <a href="{{ezone_address.pinterest}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-pinterest-p"></i></a>
+                              </li>
+                              <li>
+                                 <a href="{{ezone_address.instagram}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i
+                              ></a>
+                              </li>
+                           </ul>
+                        </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget newsletter-widget">
+                           <div class="widget-title">
+                              <h3>Newsletter</h3>
+                           </div>
+                           <div class="widget-content">
+                              <p>{{ezone_address.address}}</p>
+                              <form
+                              action="/"
+                              method="post"
+                              class="newsletter-form"
+                              >
+                              <div class="form-group">
+                                 <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    required=""
+                                 />
+                                 <button type="submit" class="theme-btn-two">
+                                    Subscribe
+                                 </button>
+                              </div>
+                              </form>
+                           </div>
+                        </div>
+                        </div>
+                     </div>
+                  </div>
+                  </div>
+               </div>
+            </div>
+         </footer>
+
+         <button class="scroll-top scroll-to-target">
+            <i class="icon-arrow-up-2"></i>
+         </button>
+
+         <template>
+            <ul class="navigation clearfix">
+               <li><a href="{% url 'home' %}">Home</a></li>
+               <li><a href="{% url 'about' %}">About Us</a></li>
+               <li><a href="{% url 'products' %}">Products</a></li>
+               <li><a href="{% url 'services' %}">Services</a></li>
+               <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+         </template>
+      </div>
+   </body>
+</html>

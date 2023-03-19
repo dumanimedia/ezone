@@ -1,0 +1,162 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block page_title %}Order Details{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>Order {% if order.id < 10 %}0{% endif %}{{order.id}}</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>Order Details</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+   
+   <section class="cart-section"  style="padding:50px 0px">
+      <div class="auto-container">
+         <h3 style="margin-bottom:30px" class="centred">Order Items Sammary</h3>
+         <div class="table-column">
+            <div class="table-outer">
+               <table class="cart-table">
+                  <thead class="cart-header">
+                     <tr>
+                        <th>Image</th>
+                        <th class="prod-column">Product</th>
+                        <th>&nbsp;</th>
+                        <th class="price">Price</th>
+                        <th class="quantity">Quantity</th>
+                        <th>Subtotal</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% for item in orderItems %}
+                        <tr>
+                           <td colspan="3" class="prod-column">
+                              <div class="column-box" style="padding-left:200px">
+                                 <div class="prod-thumb" style="left:75px">
+                                    <a>
+                                       <img src="{{item.product.image.url}}" alt="" />
+                                    </a>
+                                 </div>
+                                 <a href="{% url 'product_details' item.product.category.slug item.product.slug %}" class="prod-title line-clamp">{{item.product.title}}</a>
+                              </div>
+                           </td>
+                           <td class="price">${{item.product.price}}</td>
+                           <td class="centred">{{item.quantity}}</td>
+                           <td class="sub-total">${{item.total_price}}</td>
+                        </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>    
+         </div>          
+      </div>
+   </section>
+
+   <section class="checkout-section" style="padding-top:0px">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12 left-column">
+               <div class="inner-box">
+               <div class="billing-info">
+                  <h4 class="sub-title" style="margin-bottom:15px">Order Details</h4>
+                  <div style="padding:12px">
+                     <div>
+                        <p class="mb-2"><span style="font-weight:bold">{% if order.created_by.userprofile.user_fullname %}{{order.created_by.userprofile.user_fullname}}{% else %}{{order.created_by.username}}{% endif %}</span></p>
+                        <address>
+                           <span class="mb-1 d-inline-block"><strong>Address:</strong> {{order.address}}</span>,
+                           <br>
+                           <span class="mb-1 d-inline-block"><strong>City:</strong> {{order.city}}</span>,
+                           <br>
+                           <span class="mb-1 d-inline-block"><strong>ZIP:</strong> {{order.zipcode}}</span>
+                        </address>
+                     </div>
+                  </div>
+               </div>
+               </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 right-column">
+               <div class="inner-box">
+               <div class="payment-info">
+                  <h4 class="sub-title">Payment Proccess</h4>
+                  <div class="payment-inner">
+                     <div class="option-block">
+                        <div class="custom-controls-stacked">
+                           <label class="custom-control material-checkbox">
+                              <input
+                              style="opacity:0;width:0px"
+                              type="checkbox"
+                              class="material-control-input"
+                              />
+                              <span class="material-control-indicator"></span>
+                              <span class="description">Direct bank transfer</span>
+                           </label>
+                        </div>
+                     </div>
+                     <div class="option-block">
+                        <div class="custom-controls-stacked">
+                           <label class="custom-control material-checkbox">
+                              <input
+                              style="opacity:0;width:0px"
+                              type="checkbox"
+                              class="material-control-input"
+                              />
+                              <span class="material-control-indicator"></span>
+                              <span class="description">Paypal<a target="_blank" rel="noopener noreferrer" href="https://www.paypal.com">What is paypal?</a></span>
+                           </label>
+                        </div>
+                     </div>
+                     <div class="btn-box">
+                        <button type="submit" class="theme-btn-two">
+                           Complete Order<i class="flaticon-right-1"></i>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+               </div>
+            </div>
+         </div>
+         <div class="danger-zone">
+            <h4 class="sub-title" style="margin:150px 0px 50px">Danger Zone</h4>   
+            <form class="btn-box" action="{% url 'delete_order' order.id %}" method="post">
+               {% csrf_token %}
+               <div class="modal fade" id="delete_order_modal" tabindex="-1" aria-label="delete_product_label" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title line-clamp" id="delete_product_label">
+                              Delete Order <strong>"{{order.id}}"</strong>
+                           </h5>
+                           <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                           You wont be able to access information concerining this order since it will be gone, Are you certain?
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="theme-btn-two" data-dismiss="modal">Cancel</button>
+                           <button type="submit" class="theme-btn-two d-inline-block">
+                              Delete Order<i class="flaticon-right-1"></i>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button data-toggle="modal" data-target="#delete_order_modal" type="button" class="theme-btn-two d-inline-block">
+                  Delete Order<i class="flaticon-right-1"></i>
+               </button>
+            </form>
+         <div>
+      </div>
+   </section>
+   <script src="{% static 'js/jquery.js' %}"></script>
+   <script src="{% static 'js/popper.min.js' %}"></script>
+   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock main_page_content %}

@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}About{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>About Us</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>About Us</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+
+   <section class="about-section">
+      <div class="auto-container">
+			<div class="row align-items-center clearfix">
+				<div class="col-lg-4 col-md-6 col-sm-12 text-column">
+				<div class="text-inner">
+					<h2>Simple <br /><span>&</span> Minimalistic</h2>
+					<h3>Secure Checkout</h3>
+					<p>
+						Excepteur sint occaecat cupidat non proident sunt in culpa qui
+						officia deserunt mollit anim est laborum.
+					</p>
+					<p>
+						accusan enim ipsam voluptam quia voluptas sit aspern odit aut.
+					</p>
+					<a href="contact" class="theme-btn-one"
+						>Contact Us<i class="flaticon-right-1"></i
+					></a>
+				</div>
+				</div>
+				<div class="col-lg-4 col-md-6 col-sm-12 image-column">
+				<figure class="image-box">
+					<img src="{% static 'images/about.jpg' %}" alt="" />
+				</figure>
+				</div>
+				<div class="col-lg-4 col-md-6 col-sm-12 text-column">
+				<div class="text-inner">
+					<div class="box">
+						<h4>Ezone Overview</h4>
+						<p>
+						Excepteur sint occaecat cupidat non proident sunt in culpa
+						qui officia deserunt mollit anim est laborum.accusan enim
+						ipsam voluptam quia voluptas sit aspern odit aut.
+						</p>
+					</div>
+					<div class="box">
+						<h4>Our Mission</h4>
+						<p>
+						Excepteur sint occaecat cupidat non proident sunt in culpa
+						qui officia deserunt mollit anim est laborum.accusan enim
+						ipsam voluptam quia voluptas sit aspern odit aut.
+						</p>
+						<p>
+						Sed quia consequunturmagni dolores eos qui ratione
+						voluptatem.
+						</p>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+   </section>
+
+   <section class="chooseus-section">
+      <div class="outer-container clearfix">
+			<div class="content-column">
+				<div class="inner-column">
+				<div class="content-box">
+					<div class="sec-title style-two">
+						<h2>Top Category</h2>
+						<p>
+						There are some product that we featured for choose your best
+						</p>
+						<span
+						class="separator"
+						style="
+							background-image: url({% static 'images/icons/separator-3.png' %});
+						"
+						></span>
+					</div>
+					<div class="inner-box">
+						<div class="row clearfix">
+						<div class="col-lg-6 col-md-6 col-sm-12 single-column">
+							<div class="single-item fadeInLeft animated animated">
+								<div class="icon-box">
+								<i class="flaticon-truck"></i>
+								</div>
+								<h3>Free Shipping</h3>
+								<p>Free shipping on oder over $100</p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 single-column">
+							<div class="single-item fadeInRight animated animated">
+								<div class="icon-box">
+								<i class="flaticon-24-7"></i>
+								</div>
+								<h3>Support 24/7</h3>
+								<p>Contact us 24 hours a day, 7 days a week</p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 single-column">
+							<div class="single-item fadeInLeft animated animated">
+								<div class="icon-box">
+								<i class="flaticon-credit-card"></i>
+								</div>
+								<h3>Secure Payment</h3>
+								<p>We ensure secure payment with PEV</p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 single-column">
+							<div class="single-item fadeInRight animated animated">
+								<div class="icon-box">
+								<i class="flaticon-undo"></i>
+								</div>
+								<h3>30 Days Return</h3>
+								<p>Simply return it within 30 days for an exchange.</p>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			<div	class="image-column"	style="background-image: url({% static 'images/background/chooseus-bg.jpg' %});"></div>
+		</div>
+   </section>
+{% endblock main_page_content %}

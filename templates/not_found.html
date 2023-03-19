@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block page_title %}Not Found{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="error-section centred sec-pad">
+      <div class="auto-container">
+         <div class="inner-box">
+            <h1>404</h1>
+            <h2>Oops! Page Not Found!</h2>
+            <p>Please go back to <a href="{% url 'home' %}">Back homepage</a></p>
+            <div class="btn-box">
+            <a href="{% url 'home' %}" class="theme-btn-two"
+               >Go Back To Home<i class="flaticon-right-1"></i
+            ></a>
+            <a href="{% url 'products' %}" class="theme-btn-one"
+               >Continue Shopping<i class="flaticon-right-1"></i
+            ></a>
+            </div>
+         </div>
+      </div>
+   </section>
+{% endblock main_page_content %}

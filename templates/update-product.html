@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}Update Product{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>Update Product</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>Update Product</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+
+   <section class="contact-section">
+      <div class="auto-container">
+         <form class="row" action="{% url 'update_product' product.category.slug product.slug %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-sm-12 form-outline mb-4">
+               {{form.title.label}}
+               {{form.title}}
+            </div>
+            <div class="col-sm-12 form-outline mb-4">
+               {{form.description.label}}
+               {{form.description}}
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 form-outline mb-4">
+               {{form.price.label}}
+               {{form.price}}
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 form-outline mb-4">
+               {{form.category.label}}
+               {{form.category}}
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 form-outline mb-4">
+               {{form.brand.label}}
+               {{form.brand}}
+            </div>
+            <div class="col-sm-12">
+               <button type="submit" class="theme-btn-two" name="submit-form">
+                  Update Product<i class="flaticon-right-1"></i>
+               </button>
+            </div>
+         </form>
+      </div>
+   </section>
+{% endblock main_page_content %}

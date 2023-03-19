@@ -1,0 +1,273 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}Product Details{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>Product Details</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>Product Details</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+
+   <section class="product-details product-details-1">
+      <div class="auto-container">
+			<div class="product-details-content">
+				<div class="row clearfix">
+				<div class="col-lg-6 col-md-12 col-sm-12 image-column">
+					<figure class="product-image">
+						<img
+						src="{{product.image.url}}"
+						alt=""
+						/>
+						<a
+						href="{{product.image.url}}"
+						class="lightbox-image"
+						><i class="flaticon-search-2"></i
+						></a>
+					</figure>
+				</div>
+				<div class="col-lg-6 col-md-12 col-sm-12 content-column">
+					<div class="product-info">
+						<h3>{{product.title}}</h3>
+						<div class="customer-review clearfix">
+						<ul class="rating-box clearfix">
+							<li><i class="flaticon-star"></i></li>
+							<li><i class="flaticon-star"></i></li>
+							<li><i class="flaticon-star"></i></li>
+							<li><i class="flaticon-star"></i></li>
+							<li><i class="flaticon-star"></i></li>
+						</ul>
+						<div class="reviews">
+							<a href="{% url 'products' %}">({{reviews|length}} Review{% if reviews|length == 1 %}{% else %}s{% endif %})</a>
+						</div>
+						</div>
+						<span class="item-price">${{product.price}}</span>
+						<div class="text">
+						<p>{{product.description}}</p>
+						</div>
+						<div class="othre-options clearfix">
+                     <div class="btn-box">
+                        <a href="{% url 'add_to_cart' product.id %}">
+                           <button type="button" class="theme-btn-two">
+                              Add to cart
+                           </button>
+                        </a>
+                     </div>
+                     <ul class="info clearfix">
+                        <li>
+                           <a href="{% url 'products' %}"
+                           ><i class="flaticon-heart"></i
+                           ></a>
+                        </li>
+                        <li>
+                           <a 
+                           ><i class="flaticon-search search-toggler"></i
+                           ></a>
+                        </li>
+                     </ul>
+						</div>
+                  {% if request.user == product.user or request.user.id == 1 or request.user.id == "1" %}
+                     <form action="{% url 'delete_product' product.category.slug product.slug %}" method="post" class="othre-options clearfix">
+                        {% csrf_token %}
+                        <a href="{% url 'update_product' product.category.slug product.slug %}" class="theme-btn-two">
+                           Update
+                        </a>
+                        <div class="modal fade" id="delete_product_modal" tabindex="-1" aria-label="delete_product_label" aria-hidden="true">
+                           <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title line-clamp" id="delete_product_label">
+                                       Delete Product <b>{{product.title}}</b>
+                                    </h5>
+                                    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                                 </div>
+                                 <div class="modal-body">
+                                    the Product and All of the Order Items Associalted with it wil be deleted from the Database for good, Are you certain?
+                                 </div>
+                                 <div class="modal-footer">
+                                    <button type="button" class="theme-btn-two" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="theme-btn-two">Delete Product</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <button data-toggle="modal" data-target="#delete_product_modal" type="button" class="theme-btn-two">
+                     </form>
+                        Delete
+                     </button>
+                  {% endif %}
+						<div class="other-links">
+						<ul class="clearfix">
+							<li>SKU: {% if product.id < 10 %}0{% endif %}{{product.id}}</li>
+							<li>
+								Category: <a href="{% url 'category_details' product.category.slug %}">{{product.category.title}}</a>
+							</li>
+							<li>
+								Brand: <a href="{% url 'brand_details' product.brand.slug %}">{{product.brand.title}}</a>
+							</li>
+						</ul>
+						</div>
+						<ul class="share-option clearfix">
+						<li><h5>Follow Us:</h5></li>
+						<li>
+							<a href="{{ezone_address.facebook}}" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-facebook-f"></i>
+                     </a>
+						</li>
+						<li>
+							<a href="{{ezone_address.twitter}}" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-twitter"></i>
+                     </a>
+						</li>
+						<li>
+							<a  href="{{ezone_address.pinterest}}" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-pinterest-p"></i>
+                     </a>
+						</li>
+						<li>
+							<a href="{{ezone_address.instagram}}" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i>
+                     </a>
+						</li>
+						</ul>
+					</div>
+				</div>
+				</div>
+			</div>
+			<div class="product-discription">
+            <div class="js-tabs" id="tabs">
+              <ul class="js-tabs__header tab-btns">
+                <li><a href="#" class="js-tabs__title">Description</a></li>
+                <li><a href="#" class="js-tabs__title">Reviews(1)</a></li>
+              </ul>
+
+              <div class="js-tabs__content tabs-content">
+                <div class="text">
+                  <p>
+                    {{product.description}}
+                  </p>
+                </div>
+              </div>
+
+              <div class="js-tabs__content tabs-content">
+                <div class="review-box">
+                  <h5>{{reviews|length}} Review{% if reviews|length == 1 %}{% else %}s{% endif %} for "{{product.title}}"</h5>
+                  {% if reviews|length >= 1 %}
+                     {% for review in reviews %}
+                        <div class="review-inner">
+                           <figure class="image-box">
+                           <img src="{% static 'images/avatar.jpg' %}" alt="" />
+                           </figure>
+                           <div class="inner">
+                              <ul class="rating clearfix">
+                                 <li><i class="flaticon-star"></i></li>
+                                 <li><i class="flaticon-star"></i></li>
+                                 <li><i class="flaticon-star"></i></li>
+                                 <li><i class="flaticon-star"></i></li>
+                              </ul>
+                              <h6>{% if review.user.userprofile.user_fullname %}{{review.user.userprofile.user_fullname}}{% else %}{{review.user.username}}{% endif %} <span>- {{review.created_at|date:"M d, Y"}}</span></h6>
+                              <p> {{review.review_msg}}</p>
+                           </div>
+                        </div>
+                     {% endfor %}              
+                  {% endif %}
+                  {% if request.user.is_authenticated %}
+                     <div class="replay-inner">
+                        {% if reviews|length < 1 %}
+                           <h4 style="margin-bottom:15px;">Be First to Review “{{product.title}}”</h4>
+                        {% else %}
+                           <h4 style="margin-bottom:15px;">Leave A Review for “{{product.title}}”</h4>
+                        {% endif %}
+                     <form method="post" action="{% url 'product_details' product.category.slug product.slug %}" class="review-form">
+                        {% csrf_token %}
+                        <div class="row clearfix">
+                           <div class="col-lg-12 col-md-12 col-sm-12 form-group d-flex align-items-center card-columns">
+                              <h6>{{form.review_rating.label}}</h6>
+                              <div style="border:1px solid #222; display:inline-block;margin:15px 0px">
+                                 {{form.review_rating}}
+                              </div>
+                           </div>
+                           <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                           {{form.review_msg.label}}
+                           {{form.review_msg}}
+                           </div>
+                           <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
+                           <button type="submit" class="theme-btn-two">
+                              Submit Your Review<i class="flaticon-right-1"></i>
+                           </button>
+                           </div>
+                        </div>
+                     </form>
+                     </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+         </div>
+
+			<div class="related-product">
+				<div class="sec-title style-two">
+				<h2>Related Products</h2>
+				<p>
+					There are some product that we featured for choose your best
+				</p>
+				<span
+					class="separator"
+					style="
+						background-image: url({% static 'images/icons/separator-2.png' %});
+					"
+				></span>
+				</div>
+				<div class="row clearfix">
+               {% for product in relatedProducts %}
+                     <div class="col-lg-3 col-md-6 col-sm-12 shop-block masonry-item small-column best_seller new_arraivals top_rate">
+                        <div class="shop-block-one">
+                           <div class="inner-box">
+                           <figure class="image-box">
+                              <img src="{{ product.image.url }}" alt="" />
+                              <ul class="info-list clearfix">
+                                 <li>
+                                    <a>
+                                       <i class="flaticon-heart"></i>
+                                    </a>
+                                 </li>
+                                 <li><a href="/">Add to cart</a></li>
+                                 <li>
+                                    <a href="{{ product.image.url }}" class="lightbox-image" data-fancybox="gallery">
+                                       <i class="flaticon-search"></i>
+                                    </a>
+                                 </li>
+                              </ul>
+                           </figure>
+                           <div class="lower-content">
+                              <a class="line-clamp" href="{% url 'product_details' product.category.slug product.slug %}">{{product.title}}</a>
+                              <span class="price">${{product.price}}</span>
+                           </div>
+                           </div>
+                        </div>
+                     </div>
+                  {% endfor %}
+				</div>
+			</div>
+		</div>
+   </section>
+   <script src="{% static 'js/js_tabs.js' %}"></script>
+   <script>
+      let tabs = new Tabs({
+         elem: "tabs",
+         open: 1,
+      });
+   </script>
+   <script src="{% static 'js/jquery.js' %}"></script>
+   <script src="{% static 'js/popper.min.js' %}"></script>
+   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock main_page_content %}

@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block page_title %}Login{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="myaccount-section">
+      <div class="auto-container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 col-md-12 col-sm-12 inner-column">
+				<div class="inner-box login-inner">
+					<div class="upper-inner">
+						<h3>Log in</h3>
+						<p>Log in to access all your resources</p>
+					</div>
+					<form action="{% url 'login' %}" method="post" class="default-form">
+                  {% csrf_token %}
+						<div class="form-group">
+                     <label>Username</label>
+                     <input type="text" name="username" required="" />
+						</div>
+						<div class="form-group">
+                     <label>Password</label>
+                     <input type="password" name="password" required="" />
+						</div>
+                  {% for message in messages %}
+                     <p style="display: block; color: #d35d09; font-size: 14px; font-weight: bold; text-align:center">{{message}}</p>
+                  {% endfor %}
+						<div class="form-group">
+                     <a href="/" class="recover-password">Lost your password?</a>
+						</div>
+						<div class="form-group">
+                     <button type="submit" class="theme-btn-two">
+                        Log In<i class="flaticon-right-1"></i>
+                     </button>
+						</div>
+					</form>
+					<div class="lower-inner centred">
+						<span>or</span>
+						<p>
+						Don't Have an Account?
+						<a href="{% url 'signup' %}">Sign up Now</a>
+						</p>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+   </section>
+{% endblock main_page_content %}

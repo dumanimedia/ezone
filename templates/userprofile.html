@@ -1,0 +1,182 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}User Profile{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>User Profile</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>User Profile</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+
+   <section class="myaccount-section">
+      <div class="auto-container">
+         <div class="row js-tabs" id="tabs">
+            <ul class="col-sm-12 col-md-3 col-lg-3 flex-column dashboard-list js-tabs__header tab-btns">
+               <li>
+                  <a href="#" class="js-tabs__title nav-link">Orders</a>
+               </li>
+               <li>
+                  <a href="#" class="js-tabs__title nav-link">Dashboard</a>
+               </li>
+               <li>
+                  <a href="#" class="js-tabs__title nav-link">Account details</a>
+               </li>
+               <li>
+                  <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+               </li>
+            </ul>
+            <div class="col-sm-12 col-md-9 col-lg-9 js-tabs__content tabs-content">
+               <div>
+                  <h4>Orders</h4>
+                  {% if orders|length < 1 %}
+                     <h1>No Orders So Far</h1>
+                  {% else %}
+                     <div class="table_page table-responsive">
+                        <table>
+                           <thead>
+                              <tr>
+                                 <th>Order</th>
+                                 <th>Date</th>
+                                 <th>Status</th>
+                                 <th>Total</th>
+                                 <th>Actions</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for order in orders %}
+                                 <tr>
+                                    <td>{% if order.id < 10 %}0{% endif %}{{order.id}}</td>
+                                    <td>{{order.created_at|date:"D, d M Y"}}</td>
+                                    <td>
+                                       <span class="success">{% if order.is_paid %}Completed{% else %}Processing{% endif %}</span>
+                                    </td>
+                                    <td>${{order.total_cost}}</td>
+                                    <td><a href="{% url 'my_order_details' order.id %}" class="view">view</a></td>
+                                 </tr>
+                              {% endfor %}
+                           </tbody>
+                        </table>
+                     </div>
+                 {% endif %}
+               </div>
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-9 js-tabs__content tabs-content">
+               {{errors}}
+               <div>
+                  {% if messages %}
+                     {% for message in messages %}
+                        <p style="display: block; color: #d35d09; font-size: 14px; font-weight: bold; text-align:center; margin-bottom: 50px">{{message}}</p>
+                     {% endfor %}
+                  {% endif %}
+                  <h4>Welcome "{% if user.first_name %}{{user.user_fullname}}{% else %}{{user.user}}{% endif %}"
+                  </h4>
+                  <p>From your account dashboard. you can easily check &amp; view your <a>recent orders</a>, manage your <a>shipping and billing addresses</a> and <a>Edit your password and account details.</a></p>
+               </div>                
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-9 js-tabs__content tabs-content">
+               <div>
+                  <h3>Account details </h3>
+                  <div class="login">
+                     <div class="login_form_container">
+                         <div class="account_login_form">
+                             <form action="{% url 'update_my_account' %}" method="post">
+                                 {% csrf_token %}
+                                    <div class="default-form-box mb-20">
+                                       {{ form.first_name.label }}
+                                       <input type="text" name="first_name" id="id_first_name" value="{{user.first_name}}" />
+                                    </div>
+                                    <div class="default-form-box mb-20">
+                                       {{ form.last_name.label }}
+                                       <input type="text" name="last_name" id="id_last_name" value="{{user.last_name}}" />
+                                    </div>
+                                    <div class="default-form-box mb-20">
+                                       {{ form.mobile.label }}
+                                       <input type="text" name="mobile" id="id_mobile" value="{{user.mobile}}" />
+                                    </div>
+                                    <div class="default-form-box mb-20">
+                                       {{ form.date_of_birth.label }}
+                                       <input type="date" name="date_of_birth" id="id_date_of_birth" value="{{user.date_of_birth}}" />
+                                 </div>
+                                 <div class="save_button mt-3">
+                                     <button class="theme-btn-two"
+                                         type="submit">Update <i class="flaticon-right-1"></i></button>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+                 </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <script>
+      let Tabs = function (e) {
+         var n = document.getElementById(e.elem),
+           a = e.open || 0,
+           r = "js-tabs__title",
+           c = "js-tabs__title-active",
+           l = "js-tabs__content",
+           o = n.querySelectorAll("." + r).length;
+         function t(e) {
+           n.addEventListener("click", i);
+           for (var t = u(null == e ? a : e), l = 0; l < o; l++)
+             n.querySelectorAll("." + r)[l].setAttribute("data-index", l),
+               l === t && f(l);
+         }
+         function i(e) {
+           -1 !== e.target.className.indexOf(r) &&
+             (e.preventDefault(), f(e.target.getAttribute("data-index")));
+         }
+         function s() {
+           [].forEach.call(n.querySelectorAll("." + l), function (e) {
+             e.style.display = "none";
+           }),
+             [].forEach.call(n.querySelectorAll("." + r), function (e) {
+               var t, l;
+               e.className =
+                 ((t = e.className),
+                 (l = new RegExp("( )" + c + "()", "g")),
+                 t.replace(l, ""));
+             });
+         }
+         function u(e) {
+           return e < 0 || isNaN(e) || o < e ? 0 : e;
+         }
+         function f(e) {
+           s();
+           var t = u(e);
+           (n.querySelectorAll("." + r)[t].className += " " + c),
+             (n.querySelectorAll("." + l)[t].style.display = "");
+         }
+         function d() {
+           n.removeEventListener("click", i);
+         }
+         return (
+           t(),
+           {
+             open: f,
+             update: function (e) {
+               d(), s(), t(e);
+             },
+             destroy: d,
+           }
+         );
+      };
+
+      let tabs = new Tabs({
+         elem: "tabs",
+         open: 1,
+      });
+   </script>
+{% endblock main_page_content%}

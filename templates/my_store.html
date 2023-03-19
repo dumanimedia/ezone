@@ -1,0 +1,163 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}
+   {% if request.user.userprofile.first_name %}
+      {{request.user.userprofile.user_fullname}}'s Store
+   {% else %}
+      {{request.user}}'s Store
+   {% endif %}
+{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>{% if request.user.userprofile.first_name %}{{request.user.userprofile.user_fullname}}'s Store{% else %}{{request.user}}'s Store{% endif %}</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>Store</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+   <section class="shop-page-section">
+      <div class="auto-container">
+         <div class="product-details">
+            <div class="product-discription">   
+               {% if isFirstAdmin %}
+                  <div class="js-tabs filters" id="tabs">
+                     <ul class="js-tabs__header tab-btns tab-btns centred" style="margin-bottom:50px">
+                        <li><a href="#" class="js-tabs__title">Available Users</a></li>
+                        <li><a href="#" class="js-tabs__title">Available Categories</a></li>
+                        <li><a href="#" class="js-tabs__title">Available Brands</a></li>
+                     </ul>
+                     <div class="js-tabs__content tabs-content">
+                        {% if categories|length  <= 0 %}
+                           <h3 class="centred" style="margin-bottom:50px;margin-top:50px">No Categories match your Criteria.</h3>
+                        {% else %}
+                           <section class="collection-style-two sec-pad-2" style="padding-top: 0px;padding-bottom:0px">
+                              <div class="row clearfix">
+                                 {% for user in users %}
+                                    <div class="col-lg-4 col-md-6 col-sm-12 single-block">{{user.username}}</div>
+                                 {% endfor %}
+                              </div>
+                           </section>
+                        {% endif %}
+                     </div>
+                     <div class="js-tabs__content tabs-content">
+                        {% if categories|length  <= 0 %}
+                           <h3 class="centred" style="margin-bottom:50px;margin-top:50px">No Categories match your Criteria.</h3>
+                        {% else %}
+                           <section class="collection-style-two sec-pad-2" style="padding-top: 0px;padding-bottom:0px">
+                              <div class="row clearfix">
+                                 {% for category in categories %}
+                                    <div class="col-lg-4 col-md-6 col-sm-12 single-block">
+                                       <div class="single-item fadeInUp animated animated">
+                                          <div class="inner-box">
+                                             <figure class="image-box">
+                                             <img src="{{category.image.url}}" alt="" />
+                                             </figure>
+                                             <div class="lower-content">
+                                             <div class="inner">
+                                                <h3>
+                                                   <a href="{% url 'category_details' category.slug %}"
+                                                   >{{category.title}} <br /> Category</a
+                                                   >
+                                                </h3>
+                                                <div class="link">
+                                                   <a href="{% url 'products' %}"
+                                                   >Edit Category<i class="flaticon-right-1"></i
+                                                   ></a>
+                                                </div>
+                                             </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 {% endfor %}
+                              </div>
+                           </section>
+                        {% endif %}
+                     </div>
+                     <div class="js-tabs__content tabs-content">
+                        {% if brands|length  <= 0 %}
+                           <h3 class="centred" style="margin-bottom:50px;margin-top:50px">No Brands match your Criteria.</h3>
+                           {% else %}
+                           <ul class="row clearfix search_brands">
+                              {% for brand in brands %}
+                                 <li class="col-lg-3 col-md-6 col-sm-12 service-block" style="margin:15px 0px;">
+                                    <div class="service-block-one" style="border:1px solid #222; padding:15px 8px">
+                                       <div class="inner-box">
+                                          <div class="icon-box">
+                                             <i class="{% if brand.icon %}{{brand.icon}}{% else %}flaticon-truck{% endif %}"></i>
+                                          </div>
+                                          <h3>
+                                             <a href="{% url 'brand_details' brand.slug %}">{{brand.title}}</a>
+                                          </h3>
+                                          <div class="link">
+                                             <a href="{% url 'brand_details' brand.slug %}">Edit Brand
+                                                <i class="flaticon-right-1"></i>
+                                             </a>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </li>
+                              {% endfor %}
+                           </ul>
+                           
+                        {% endif %}
+                     </div>
+                  </div>
+               {% endif %}
+            </div>
+         </div>
+         <h1 style="margin-bottom:30px" class="navbar">
+            <span>Your Products: {% if products|length < 10 %}0{% endif %}{{products|length}}</span>
+            <a href="{% url 'create_product' %}" style="display:inline" class="theme-btn-two">Create Product</a></h1>
+         {% if not products %}
+            <h1 style="margin-bottom: 30px; text-align: center">No Products In the Database Sofar</h1>
+         {% else %}
+               <div class="items-container row clearfix">
+                  {% for product in products %}
+                     <div class="col-lg-3 col-md-6 col-sm-12 shop-block masonry-item small-column best_seller new_arraivals top_rate">
+                        <div class="shop-block-one">
+                           <div class="inner-box">
+                           <figure class="image-box">
+                              <img src="{{ product.image.url }}" alt="" />
+                              <ul class="info-list clearfix">
+                                 <li>
+                                    <a>
+                                       <i class="flaticon-heart"></i>
+                                    </a>
+                                 </li>
+                                 <li><a href="/">Add to cart</a></li>
+                                 <li>
+                                    <a href="{{ product.image.url }}" class="lightbox-image" data-fancybox="gallery">
+                                       <i class="flaticon-search"></i>
+                                    </a>
+                                 </li>
+                              </ul>
+                           </figure>
+                           <div class="lower-content">
+                              <a class="line-clamp" href="{% url 'product_details' product.category.slug product.slug %}">{{product.title}}</a>
+                              <span class="price">${{product.price}}</span>
+                           </div>
+                           </div>
+                        </div>
+                     </div>
+                  {% endfor %}
+               </div>
+         {% endif %}
+      </div>
+   </section>
+   <script src="{% static 'js/js_tabs.js' %}"></script>
+   <script>
+      let tabs = new Tabs({
+         elem: "tabs",
+         open: 1,
+      });
+   </script>
+{% endblock main_page_content %}

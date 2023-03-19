@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}{{category.title}}{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>{{category.title}} Category</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>categories</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+   <div class="auto-container" style="margin-top: 50px;margin-bottom:50px">
+      {% if products|length <= 0 %}
+         <h1 class="centred">No Products for the <span style="color:#d35d09">{{category.title}}</span> category Sofar</h1>
+      {% else %}
+         <div class="items-container row clearfix">
+            {% for product in products %}
+               <div class="col-lg-3 col-md-6 col-sm-12 shop-block masonry-item small-column best_seller new_arraivals top_rate">
+                  <div class="shop-block-one">
+                     <div class="inner-box">
+                     <figure class="image-box">
+                        <img src="{{ product.image.url }}" alt="" />
+                        <ul class="info-list clearfix">
+                           <li>
+                              <a>
+                                 <i class="flaticon-heart"></i>
+                              </a>
+                           </li>
+                           <li><a href="/">Add to cart</a></li>
+                           <li>
+                              <a href="{{ product.image.url }}" class="lightbox-image" data-fancybox="gallery">
+                                 <i class="flaticon-search"></i>
+                              </a>
+                           </li>
+                        </ul>
+                     </figure>
+                     <div class="lower-content">
+                        <a class="line-clamp" href="{% url 'product_details' product.category.slug product.slug %}">{{product.title}}</a>
+                        <span class="price">${{product.price}}</span>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+            {% endfor %}
+         </div>
+      {% endif %}
+   </div>
+{% endblock main_page_content %}

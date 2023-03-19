@@ -1,0 +1,210 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}Home{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="banner-style-one">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/shape/shape-1.png' %})"></div>
+      <div class="auto-container">
+         <div class="content-inner">
+            <div class="content-box">
+            <h1>Up To <br /><span>50%</span> Discount</h1>
+            <h3>Summer Lookbook - 2023</h3>
+            <p>New Modern Stylist Fashionable Men's Wear Jeans Shirt.</p>
+            <div class="btn-box">
+               <a href="{% url 'products' %}" class="theme-btn-one"
+                  >Explore Now<i class="flaticon-right-1"></i
+               ></a>
+            </div>
+            </div>
+            <figure class="image-box image-1">
+            <img src="{% static 'images/banner-image.png' %}" alt="" />
+            </figure>
+         </div>
+      </div>
+   </section>
+
+   <section class="collection-style-two sec-pad-2">
+      <div class="auto-container">
+			<div class="row clearfix">
+            {% if categories|length <= 0 %}
+            {% else %}
+               {% for category in categories %}
+                  <div class="col-lg-4 col-md-6 col-sm-12 single-block">
+                     <div class="single-item fadeInUp animated animated">
+                        <div class="inner-box">
+                           <figure class="image-box">
+                           <img src="{{category.image.url}}" alt="" />
+                           </figure>
+                           <div class="lower-content">
+                           <div class="inner">
+                              <h3>
+                                 <a href="{% url 'category_details' category.slug %}"
+                                 >{{category.title}} <br /> Category</a
+                                 >
+                              </h3>
+                              <div class="link">
+                                 <a href="{% url 'products' %}"
+                                 >Discover Now<i class="flaticon-right-1"></i
+                                 ></a>
+                              </div>
+                           </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               {% endfor %}
+            {% endif %}
+			</div>
+		</div>
+   </section>
+
+   <section class="shop-section">
+      <div class="auto-container">
+         <div class="sec-title">
+            <h2>Our Top Collection</h2>
+            <p>There are some product that we featured for choose your best</p>
+            <span
+            class="separator"
+            style="background-image: url({% static 'images/icons/separator-1.png' %})"
+            ></span>
+         </div>
+         <div class="sortable-masonry">
+            {% if products|length <= 0 %}
+               <h1 style="padding: 30px; text-align: center">No Products In the Database Sofar</h1>
+            {% else %}
+               <div class="filters">
+                  <ul class="filter-tabs filter-btns centred clearfix">
+                     <li
+                        class="active filter"
+                        data-role="button"
+                        data-filter=".best_seller"
+                     >
+                        Best Seller
+                     </li>
+                     <li
+                        class="filter"
+                        data-role="button"
+                        data-filter=".new_arraivals"
+                     >
+                        New Arraivals
+                     </li>
+                     <li class="filter" data-role="button" data-filter=".top_rate">
+                        Top Rate
+                     </li>
+                  </ul>
+               </div>
+               <div class="items-container row clearfix">
+                  {% for product in products %}
+                     <div class="col-lg-3 col-md-6 col-sm-12 shop-block masonry-item small-column best_seller new_arraivals top_rate">
+                        <div class="shop-block-one">
+                           <div class="inner-box">
+                           <figure class="image-box">
+                              <img src="{{ product.image.url }}" alt="" />
+                              <ul class="info-list clearfix">
+                                 <li>
+                                    <a>
+                                       <i class="flaticon-heart"></i>
+                                    </a>
+                                 </li>
+                                 <li><a href="/">Add to cart</a></li>
+                                 <li>
+                                    <a href="{{ product.image.url }}" class="lightbox-image" data-fancybox="gallery">
+                                       <i class="flaticon-search"></i>
+                                    </a>
+                                 </li>
+                              </ul>
+                           </figure>
+                           <div class="lower-content">
+                              <a class="line-clamp" href="{% url 'product_details' product.category.slug product.slug %}">{{product.title}}</a>
+                              <span class="price">${{product.price}}</span>
+                           </div>
+                           </div>
+                        </div>
+                     </div>
+                  {% endfor %}
+               </div>
+            {% endif %}
+         </div>
+         <div class="more-btn centred">
+            <a href="{% url 'products' %}" class="theme-btn-one">
+               View All Products<i class="flaticon-right-1"></i>
+            </a>
+         </div>
+      </div>
+   </section>
+
+   <section class="cta-section">
+      <div class="image-layer" style="background-image: url({% static 'images/background/cta-bg.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="cta-inner centred">
+            <div class="pattern-layer">
+            <div
+               class="pattern-1"
+               style="background-image: url({% static 'images/shape/shape-2.png' %})"
+            ></div>
+            <div
+               class="pattern-2"
+               style="background-image: url({% static 'images/shape/shape-3.png' %})"
+            ></div>
+            </div>
+            <h2>End of Season Clearance Sale upto 50%</h2>
+            <p>
+            Welcome to the new range of shaving products from master barber.
+            We have over three decades of experience in the male grooming
+            industry
+            </p>
+            <a href="{% url 'products' %}" class="theme-btn-one"
+            >Shop Now<i class="flaticon-right-1"></i
+            ></a>
+         </div>
+      </div>
+   </section>
+
+   <section class="service-section">
+      <div class="auto-container">
+         <div class="inner-container">
+            <div class="row clearfix">
+            <div class="col-lg-3 col-md-6 col-sm-12 service-block">
+               <div class="service-block-one">
+                  <div class="inner-box">
+                  <div class="icon-box"><i class="flaticon-truck"></i></div>
+                  <h3>Free Shipping</h3>
+                  <p>Free shipping on oder over $100</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 service-block">
+               <div class="service-block-one">
+                  <div class="inner-box">
+                  <div class="icon-box">
+                     <i class="flaticon-credit-card"></i>
+                  </div>
+                  <h3>Secure Payment</h3>
+                  <p>We ensure secure payment with PEV</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 service-block">
+               <div class="service-block-one">
+                  <div class="inner-box">
+                  <div class="icon-box"><i class="flaticon-24-7"></i></div>
+                  <h3>Support 24/7</h3>
+                  <p>Contact us 24 hours a day, 7 days a week</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 service-block">
+               <div class="service-block-one">
+                  <div class="inner-box">
+                  <div class="icon-box"><i class="flaticon-undo"></i></div>
+                  <h3>30 Days Return</h3>
+                  <p>Simply return it within 30 days for an exchange.</p>
+                  </div>
+               </div>
+            </div>
+            </div>
+         </div>
+      </div>
+   </section>
+{% endblock main_page_content %}

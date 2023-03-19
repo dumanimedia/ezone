@@ -1,0 +1,124 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block page_title %}Services{% endblock page_title %}
+
+{% block main_page_content %}
+   <section class="page-title centred">
+      <div class="pattern-layer"	style="background-image: url({% static 'images/background/page-title.jpg' %})"></div>
+      <div class="auto-container">
+         <div class="content-box">
+            <h1>Our Services</h1>
+            <ul class="bread-crumb clearfix">
+            <li>
+               <i class="icon-home"></i><a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>Our Services</li>
+            </ul>
+         </div>
+      </div>
+   </section>
+
+   <section class="service-page-section">
+      <div class="auto-container">
+			<div class="service-block-two mb-100">
+				<div class="inner-box">
+				<div class="row clearfix">
+					<div class="col-lg-6 col-md-6 col-sm-12 image-column">
+						<figure class="image-box mr-30">
+						<img src="{% static 'images/service/service-1.jpg' %}" alt="" />
+						</figure>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-12 content-column">
+						<div class="content-box ml-30 mr-100">
+						<h2><a href="{% url 'category_details' 'clothes' %}">Fashion Design</a></h2>
+						<p>
+							Excepteur sint occaecat cupidatat non proident, sunt in
+							culpa qui officia deserunt mollit anim id est laborum. sed
+							ut perspici
+						</p>
+						<a href="{% url 'category_details' 'clothes' %}" class="theme-btn-one"
+							>View Catalog<i class="flaticon-right-1"></i
+						></a>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			<div class="service-block-two mb-100">
+				<div class="inner-box">
+				<div class="row clearfix">
+					<div class="col-lg-6 col-md-6 col-sm-12 content-column">
+						<div class="content-box text-right ml-100 mr-30">
+						<h2><a href="{% url 'services' %}">Furniture Design</a></h2>
+						<p>
+							Excepteur sint occaecat cupidatat non proident, sunt in
+							culpa qui officia deserunt mollit anim id est laborum. sed
+							ut perspici
+						</p>
+						<a href="{% url 'services' %}" class="theme-btn-one"
+							>View Catalog<i class="flaticon-right-1"></i
+						></a>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-12 image-column">
+						<figure class="image-box ml-30">
+						<img src="{% static 'images/service/service-2.jpg' %}" alt="" />
+						</figure>
+					</div>
+				</div>
+				</div>
+			</div>
+			<div class="service-block-two">
+				<div class="inner-box">
+				<div class="row clearfix">
+					<div class="col-lg-6 col-md-6 col-sm-12 image-column">
+						<figure class="image-box mr-30">
+						<img src="{% static 'images/service/service-3.jpg' %}" alt="" />
+						</figure>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-12 content-column">
+						<div class="content-box ml-30 mr-100">
+						<h2><a href="{% url 'services' %}">Handmade Craft</a></h2>
+						<p>
+							Excepteur sint occaecat cupidatat non proident, sunt in
+							culpa qui officia deserunt mollit anim id est laborum. sed
+							ut perspici
+						</p>
+						<a href="{% url 'services' %}" class="theme-btn-one"
+							>View Catalog<i class="flaticon-right-1"></i
+						></a>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+   </section>
+
+   <section class="cta-section">
+      <div class="image-layer" style="background-image: url({% static 'images/background/cta-bg.jpg' %})"></div>
+      <div class="auto-container">
+			<div class="cta-inner centred">
+				<div class="pattern-layer">
+				<div
+					class="pattern-1"
+					style="background-image: url({% static 'images/shape/shape-2.png' %})"
+				></div>
+				<div
+					class="pattern-2"
+					style="background-image: url({% static 'images/shape/shape-3.png' %})"
+				></div>
+				</div>
+				<h2>End of Season Clearance Sale upto 50%</h2>
+				<p>
+				Welcome to the new range of shaving products from master barber.
+				We have over three decades of experience in the male grooming
+				industry
+				</p>
+				<a href="{% url 'products' %}" class="theme-btn-one"
+				>Shop Now<i class="flaticon-right-1"></i
+				></a>
+			</div>
+		</div>
+   </section>
+{% endblock main_page_content %}
